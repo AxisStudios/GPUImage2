@@ -2,12 +2,12 @@ import Foundation
 
 public func defaultVertexShaderForInputs(_ inputCount:UInt) -> String {
     switch inputCount {
-        case 1: return OneInputVertexShader
-        case 2: return TwoInputVertexShader
-        case 3: return ThreeInputVertexShader
-        case 4: return FourInputVertexShader
-        case 5: return FiveInputVertexShader
-        default: return OneInputVertexShader
+    case 1: return OneInputVertexShader
+    case 2: return TwoInputVertexShader
+    case 3: return ThreeInputVertexShader
+    case 4: return FourInputVertexShader
+    case 5: return FiveInputVertexShader
+    default: return OneInputVertexShader
     }
 }
 
@@ -35,14 +35,14 @@ open class BasicOperation: ImageProcessingOperation {
     }
     public var activatePassthroughOnNextFrame:Bool = false
     public var uniformSettings = ShaderUniformSettings()
-
+    
     // MARK: -
     // MARK: Internal
-
+    
     public let targets = TargetContainer()
     public let sources = SourceContainer()
-    public var shader:ShaderProgram
-    var inputFramebuffers = [UInt:Framebuffer]()
+    var shader:ShaderProgram
+    public var inputFramebuffers = [UInt:Framebuffer]()
     var renderFramebuffer:Framebuffer!
     var outputFramebuffer:Framebuffer { get { return renderFramebuffer } }
     let usesAspectRatio:Bool
@@ -51,7 +51,7 @@ open class BasicOperation: ImageProcessingOperation {
     
     // MARK: -
     // MARK: Initialization and teardown
-
+    
     public init(shader:ShaderProgram, numberOfInputs:UInt = 1) {
         self.maximumInputs = numberOfInputs
         self.shader = shader
@@ -64,7 +64,7 @@ open class BasicOperation: ImageProcessingOperation {
         self.shader = compiledShader
         usesAspectRatio = shader.uniformIndex("aspectRatio") != nil
     }
-
+    
     public init(vertexShaderFile:URL? = nil, fragmentShaderFile:URL, numberOfInputs:UInt = 1, operationName:String = #file) throws {
         let compiledShader:ShaderProgram
         if let vertexShaderFile = vertexShaderFile {
@@ -78,18 +78,18 @@ open class BasicOperation: ImageProcessingOperation {
     }
     
     deinit {
-        debugPrint("Deallocating operation: \(self)")
+        //debugPrint("Deallocating operation: \(self)")
     }
     
     // MARK: -
     // MARK: Rendering
     
-    open func newFramebufferAvailable(_ framebuffer:Framebuffer, fromSourceIndex:UInt) {
+    public func newFramebufferAvailable(_ framebuffer:Framebuffer, fromSourceIndex:UInt) {
         if let previousFramebuffer = inputFramebuffers[fromSourceIndex] {
             previousFramebuffer.unlock()
         }
         inputFramebuffers[fromSourceIndex] = framebuffer
-
+        
         guard (!activatePassthroughOnNextFrame) else { // Use this to allow a bootstrap of cyclical processing, like with a low pass filter
             activatePassthroughOnNextFrame = false
             updateTargetsWithFramebuffer(framebuffer)
@@ -148,6 +148,9 @@ open class BasicOperation: ImageProcessingOperation {
                 remainingFramebuffers[key] = framebuffer
             }
         }
+        
+        renderFramebuffer.userInfo = inputFramebuffers[0]!.userInfo
+        
         inputFramebuffers = remainingFramebuffers
     }
     
@@ -183,11 +186,10 @@ open class BasicOperation: ImageProcessingOperation {
     }
     
     public func transmitPreviousImage(to target:ImageConsumer, atIndex:UInt) {
-        sharedImageProcessingContext.runOperationAsynchronously{
-            guard let renderFramebuffer = self.renderFramebuffer, (!renderFramebuffer.timingStyle.isTransient()) else { return }
-            
-            renderFramebuffer.lock()
-            target.newFramebufferAvailable(renderFramebuffer, fromSourceIndex:atIndex)
-        }
+        //guard let renderFramebuffer = self.renderFramebuffer, (!renderFramebuffer.timingStyle.isTransient()) else { return }
+        
+        //renderFramebuffer.lock()
+        //target.newFramebufferAvailable(renderFramebuffer, fromSourceIndex:atIndex)
     }
 }
+

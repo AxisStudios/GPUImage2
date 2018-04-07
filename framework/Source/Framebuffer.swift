@@ -10,15 +10,15 @@ import Glibc
 #if GLES
     import OpenGLES
     #else
-    import Darwin.C
-    import GLKit
+    import OpenGL.GL3
 #endif
 #endif
 
 import Foundation
+import AVFoundation
 
 // TODO: Add a good lookup table to this to allow for detailed error messages
-public struct FramebufferCreationError:Error {
+struct FramebufferCreationError:Error {
     let errorCode:GLenum
 }
 
@@ -33,7 +33,7 @@ public enum FramebufferTimingStyle {
         }
     }
     
-    var timestamp:Timestamp? {
+    public var timestamp:Timestamp? {
         get {
             switch self {
                 case .stillImage: return nil
@@ -46,9 +46,10 @@ public enum FramebufferTimingStyle {
 public class Framebuffer {
     public var timingStyle:FramebufferTimingStyle = .stillImage
     public var orientation:ImageOrientation
-
+    public var userInfo:[AnyHashable:Any]?
+    
     public let texture:GLuint
-    public let framebuffer:GLuint?
+    let framebuffer:GLuint?
     let stencilBuffer:GLuint?
     public let size:GLSize
     let internalFormat:Int32
@@ -58,7 +59,7 @@ public class Framebuffer {
     let hash:Int64
     let textureOverride:Bool
     
-    weak var context:OpenGLContext?
+    unowned var context:OpenGLContext
     
     public init(context:OpenGLContext, orientation:ImageOrientation, size:GLSize, textureOnly:Bool = false, minFilter:Int32 = GL_LINEAR, magFilter:Int32 = GL_LINEAR, wrapS:Int32 = GL_CLAMP_TO_EDGE, wrapT:Int32 = GL_CLAMP_TO_EDGE, internalFormat:Int32 = GL_RGBA, format:Int32 = GL_BGRA, type:Int32 = GL_UNSIGNED_BYTE, stencil:Bool = false, overriddenTexture:GLuint? = nil) throws {
         self.context = context
@@ -97,18 +98,24 @@ public class Framebuffer {
     deinit {
         if (!textureOverride) {
             var mutableTexture = texture
-            glDeleteTextures(1, &mutableTexture)
-            //log.debugLog("Delete texture at size: \(size)")
+            context.runOperationAsynchronously {
+                glDeleteTextures(1, &mutableTexture)
+            }
+            //debugPrint("Delete texture at size: \(size)")
         }
         
         if let framebuffer = framebuffer {
 			var mutableFramebuffer = framebuffer
-            glDeleteFramebuffers(1, &mutableFramebuffer)
+            context.runOperationAsynchronously {
+                glDeleteFramebuffers(1, &mutableFramebuffer)
+            }
         }
 
         if let stencilBuffer = stencilBuffer {
             var mutableStencil = stencilBuffer
-            glDeleteRenderbuffers(1, &mutableStencil)
+            context.runOperationAsynchronously {
+                glDeleteRenderbuffers(1, &mutableStencil)
+            }
         }
     }
     
@@ -145,7 +152,7 @@ public class Framebuffer {
     }
 
     public func texturePropertiesForOutputRotation(_ rotation:Rotation) -> InputTextureProperties {
-        return InputTextureProperties(textureVBO:context!.textureVBO(for:rotation), texture:texture)
+        return InputTextureProperties(textureVBO:context.textureVBO(for:rotation), texture:texture)
     }
 
     public func texturePropertiesForTargetOrientation(_ targetOrientation:ImageOrientation) -> InputTextureProperties {
@@ -163,7 +170,7 @@ public class Framebuffer {
 
     weak var cache:FramebufferCache?
     var framebufferRetainCount = 0
-    public func lock() {
+    func lock() {
         framebufferRetainCount += 1
     }
 

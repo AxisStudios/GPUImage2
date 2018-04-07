@@ -8,8 +8,7 @@
 #if GLES
     import OpenGLES
     #else
-    import Darwin.C
-    import GLKit
+    import OpenGL.GL3
 #endif
 #endif
 
@@ -51,7 +50,7 @@ public class Histogram: BasicOperation {
         }
     }
     
-    override public func renderFrame() {
+    override open func renderFrame() {
         let inputSize = sizeOfInitialStageBasedOnFramebuffer(inputFramebuffers[0]!)
         let inputByteSize = Int(inputSize.width * inputSize.height * 4)
         let data = UnsafeMutablePointer<UInt8>.allocate(capacity:inputByteSize)
@@ -85,6 +84,6 @@ public class Histogram: BasicOperation {
         }
 
         disableBlending()
-        data.deallocate()
+        data.deallocate(capacity:inputByteSize)
     }
 }
