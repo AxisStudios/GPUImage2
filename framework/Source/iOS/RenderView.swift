@@ -13,6 +13,8 @@ public protocol RenderViewDelegate: class {
 // TODO: Add support for transparency
 // TODO: Deal with view resizing
 public class RenderView: UIView, ImageConsumer {
+    public weak var delegate: RenderViewDelegate?
+
     public var backgroundRenderColor = Color.black
     public var fillMode = FillMode.preserveAspectRatioAndFill // default is .preserveAspectRatio
     public var orientation: ImageOrientation = .portrait
@@ -88,7 +90,7 @@ public class RenderView: UIView, ImageConsumer {
         }
     }
     
-    func createDisplayFramebuffer() {
+    func createDisplayFramebuffer() -> Bool {
         var newDisplayFramebuffer: GLuint = 0
         glGenFramebuffers(1, &newDisplayFramebuffer)
         displayFramebuffer = newDisplayFramebuffer

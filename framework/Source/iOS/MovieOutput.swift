@@ -58,7 +58,7 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
     var synchronizedEncodingDebug = false
     var totalFramesAppended:Int = 0
     
-    public init(URL:Foundation.URL, size:Size, fileType:String = AVFileTypeQuickTimeMovie, liveVideo:Bool = false, videoSettings:[String:Any]? = nil, videoNaturalTimeScale:CMTimeScale? = nil, audioSettings:[String:Any]? = nil, audioSourceFormatHint:CMFormatDescription? = nil) throws {
+    public init(URL:Foundation.URL, size:Size, fileType: AVFileType = .mov, liveVideo:Bool = false, videoSettings:[String:Any]? = nil, videoNaturalTimeScale:CMTimeScale? = nil, audioSettings:[String:Any]? = nil, audioSourceFormatHint:CMFormatDescription? = nil) throws {
         imageProcessingShareGroup = sharedImageProcessingContext.context.sharegroup
         let movieProcessingContext = OpenGLContext()
         
@@ -83,7 +83,7 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
         localSettings[AVVideoHeightKey] = localSettings[AVVideoHeightKey] ?? size.height
         localSettings[AVVideoCodecKey] =  localSettings[AVVideoCodecKey] ?? AVVideoCodecH264
         
-        assetWriterVideoInput = AVAssetWriterInput(mediaType:AVMediaTypeVideo, outputSettings:localSettings)
+        assetWriterVideoInput = AVAssetWriterInput(mediaType:.video, outputSettings:localSettings)
         assetWriterVideoInput.expectsMediaDataInRealTime = liveVideo
         
         // You should provide a naturalTimeScale if you have one for the current media.
@@ -120,12 +120,7 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
         // we will be able to accept framebuffers but the ones that piled up will come in too quickly resulting in most being dropped.
         DispatchQueue.global(qos: .utility).async {
             do {
-                var success = false
-                try NSObject.catchException {
-                    success = self.assetWriter.startWriting()
-                }
-                
-                if(!success) {
+                if(!self.assetWriter.startWriting()) {
                     throw MovieOutputError.startWritingError(assetWriterError: self.assetWriter.error)
                 }
                 
@@ -229,11 +224,9 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
                 try self.renderIntoPixelBuffer(self.pixelBuffer!, framebuffer:framebuffer)
                 
                 self.synchronizedEncodingDebugPrint("Process frame output")
-                
-                try NSObject.catchException {
-                    if (!self.assetWriterPixelBufferInput.append(self.pixelBuffer!, withPresentationTime:frameTime)) {
-                        print("WARNING: Trouble appending pixel buffer at time: \(frameTime) \(String(describing: self.assetWriter.error))")
-                    }
+
+                if (!self.assetWriterPixelBufferInput.append(self.pixelBuffer!, withPresentationTime:frameTime)) {
+                    print("WARNING: Trouble appending pixel buffer at time: \(frameTime) \(String(describing: self.assetWriter.error))")
                 }
             }
             catch {
@@ -297,7 +290,7 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
     // MARK: Audio support
     
     public func activateAudioTrack() {
-        assetWriterAudioInput = AVAssetWriterInput(mediaType:AVMediaTypeAudio, outputSettings:self.audioSettings, sourceFormatHint:self.audioSourceFormatHint)
+        assetWriterAudioInput = AVAssetWriterInput(mediaType: .audio, outputSettings:self.audioSettings, sourceFormatHint:self.audioSourceFormatHint)
 
         assetWriter.add(assetWriterAudioInput!)
         assetWriterAudioInput?.expectsMediaDataInRealTime = encodingLiveVideo
@@ -332,16 +325,9 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
             }
             
             self.synchronizedEncodingDebugPrint("Process audio sample output")
-            
-            do {
-                try NSObject.catchException {
-                    if (!assetWriterAudioInput.append(sampleBuffer)) {
-                        print("WARNING: Trouble appending audio sample buffer: \(String(describing: self.assetWriter.error))")
-                    }
-                }
-            }
-            catch {
-                print("WARNING: Trouble appending audio sample buffer: \(error)")
+
+            if (!assetWriterAudioInput.append(sampleBuffer)) {
+                print("WARNING: Trouble appending audio sample buffer: \(String(describing: self.assetWriter.error))")
             }
         }
         

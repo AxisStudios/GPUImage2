@@ -139,18 +139,18 @@ public class MovieInput: ImageSource {
             let assetReader = try AVAssetReader.init(asset: self.asset)
             
             if(self.videoComposition == nil) {
-                let readerVideoTrackOutput = AVAssetReaderTrackOutput(track: self.asset.tracks(withMediaType: AVMediaTypeVideo).first!, outputSettings:outputSettings)
+                let readerVideoTrackOutput = AVAssetReaderTrackOutput(track: self.asset.tracks(withMediaType: .video).first!, outputSettings:outputSettings)
                 readerVideoTrackOutput.alwaysCopiesSampleData = false
                 assetReader.add(readerVideoTrackOutput)
             }
             else {
-                let readerVideoTrackOutput = AVAssetReaderVideoCompositionOutput(videoTracks: self.asset.tracks(withMediaType: AVMediaTypeVideo), videoSettings: outputSettings)
+                let readerVideoTrackOutput = AVAssetReaderVideoCompositionOutput(videoTracks: self.asset.tracks(withMediaType: .video), videoSettings: outputSettings)
                 readerVideoTrackOutput.videoComposition = self.videoComposition
                 readerVideoTrackOutput.alwaysCopiesSampleData = false
                 assetReader.add(readerVideoTrackOutput)
             }
             
-            if let audioTrack = self.asset.tracks(withMediaType: AVMediaTypeAudio).first,
+            if let audioTrack = self.asset.tracks(withMediaType: .audio).first,
                 let _ = self.audioEncodingTarget {
                 let readerAudioTrackOutput = AVAssetReaderTrackOutput(track: audioTrack, outputSettings: audioSettings)
                 readerAudioTrackOutput.alwaysCopiesSampleData = false
@@ -191,17 +191,9 @@ public class MovieInput: ImageSource {
         guard let assetReader = self.createReader() else {
             return // A return statement in this frame will end thread execution.
         }
-        
-        do {
-            try NSObject.catchException {
-                guard assetReader.startReading() else {
-                    print("ERROR: Unable to start reading: \(String(describing: assetReader.error))")
-                    return
-                }
-            }
-        }
-        catch {
-            print("ERROR: Unable to start reading: \(error)")
+
+        guard assetReader.startReading() else {
+            print("ERROR: Unable to start reading: \(String(describing: assetReader.error))")
             return
         }
         
@@ -209,10 +201,10 @@ public class MovieInput: ImageSource {
         var readerAudioTrackOutput:AVAssetReaderOutput? = nil
         
         for output in assetReader.outputs {
-            if(output.mediaType == AVMediaTypeVideo) {
+            if(output.mediaType == AVMediaType.video.rawValue) {
                 readerVideoTrackOutput = output
             }
-            if(output.mediaType == AVMediaTypeAudio) {
+            if(output.mediaType == AVMediaType.audio.rawValue) {
                 readerAudioTrackOutput = output
             }
         }
