@@ -192,11 +192,24 @@ public class MovieInput: ImageSource {
             return // A return statement in this frame will end thread execution.
         }
 
-        guard assetReader.startReading() else {
-            print("ERROR: Unable to start reading: \(String(describing: assetReader.error))")
-            return
+        do {
+            try NSObject.catchException {
+                guard assetReader.startReading() else {
+                    print("ERROR: Unable to start reading: \(String(describing: assetReader.error))")
+                    return
+                }
+            }
         }
-        
+        catch {
+            print("ERROR: Unable to start reading: \(error)")
+
+            guard assetReader.startReading() else {
+                print("ERROR: Unable to start reading: \(String(describing: assetReader.error))")
+                return
+            }
+        }
+
+
         var readerVideoTrackOutput:AVAssetReaderOutput? = nil
         var readerAudioTrackOutput:AVAssetReaderOutput? = nil
         

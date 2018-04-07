@@ -120,7 +120,13 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
         // we will be able to accept framebuffers but the ones that piled up will come in too quickly resulting in most being dropped.
         DispatchQueue.global(qos: .utility).async {
             do {
-                if(!self.assetWriter.startWriting()) {
+
+                var success = false
+                try NSObject.catchException {
+                    success = self.assetWriter.startWriting()
+                }
+
+                if(!success) {
                     throw MovieOutputError.startWritingError(assetWriterError: self.assetWriter.error)
                 }
                 
@@ -225,8 +231,10 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
                 
                 self.synchronizedEncodingDebugPrint("Process frame output")
 
-                if (!self.assetWriterPixelBufferInput.append(self.pixelBuffer!, withPresentationTime:frameTime)) {
-                    print("WARNING: Trouble appending pixel buffer at time: \(frameTime) \(String(describing: self.assetWriter.error))")
+                try NSObject.catchException {
+                    if (!self.assetWriterPixelBufferInput.append(self.pixelBuffer!, withPresentationTime:frameTime)) {
+                        print("WARNING: Trouble appending pixel buffer at time: \(frameTime) \(String(describing: self.assetWriter.error))")
+                    }
                 }
             }
             catch {
@@ -326,8 +334,15 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
             
             self.synchronizedEncodingDebugPrint("Process audio sample output")
 
-            if (!assetWriterAudioInput.append(sampleBuffer)) {
-                print("WARNING: Trouble appending audio sample buffer: \(String(describing: self.assetWriter.error))")
+            do {
+                try NSObject.catchException {
+                    if (!assetWriterAudioInput.append(sampleBuffer)) {
+                        print("WARNING: Trouble appending audio sample buffer: \(String(describing: self.assetWriter.error))")
+                    }
+                }
+            }
+            catch {
+                print("WARNING: Trouble appending audio sample buffer: \(error)")
             }
         }
         
