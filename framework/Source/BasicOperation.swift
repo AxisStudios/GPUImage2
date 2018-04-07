@@ -41,7 +41,7 @@ open class BasicOperation: ImageProcessingOperation {
 
     public let targets = TargetContainer()
     public let sources = SourceContainer()
-    var shader:ShaderProgram
+    public var shader:ShaderProgram
     var inputFramebuffers = [UInt:Framebuffer]()
     var renderFramebuffer:Framebuffer!
     var outputFramebuffer:Framebuffer { get { return renderFramebuffer } }
@@ -84,7 +84,7 @@ open class BasicOperation: ImageProcessingOperation {
     // MARK: -
     // MARK: Rendering
     
-    public func newFramebufferAvailable(_ framebuffer:Framebuffer, fromSourceIndex:UInt) {
+    open func newFramebufferAvailable(_ framebuffer:Framebuffer, fromSourceIndex:UInt) {
         if let previousFramebuffer = inputFramebuffers[fromSourceIndex] {
             previousFramebuffer.unlock()
         }
@@ -103,7 +103,7 @@ open class BasicOperation: ImageProcessingOperation {
         }
     }
     
-    func renderFrame() {
+    open func renderFrame() {
         renderFramebuffer = sharedImageProcessingContext.framebufferCache.requestFramebufferWithProperties(orientation:.portrait, size:sizeOfInitialStageBasedOnFramebuffer(inputFramebuffers[0]!), stencil:mask != nil)
         
         let textureProperties = initialTextureProperties()
@@ -175,7 +175,7 @@ open class BasicOperation: ImageProcessingOperation {
         return inputTextureProperties
     }
     
-    func configureFramebufferSpecificUniforms(_ inputFramebuffer:Framebuffer) {
+    open func configureFramebufferSpecificUniforms(_ inputFramebuffer:Framebuffer) {
         if usesAspectRatio {
             let outputRotation = overriddenOutputRotation ?? inputFramebuffer.orientation.rotationNeededForOrientation(.portrait)
             uniformSettings["aspectRatio"] = inputFramebuffer.aspectRatioForRotation(outputRotation)

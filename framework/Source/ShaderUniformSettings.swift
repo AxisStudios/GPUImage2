@@ -8,7 +8,8 @@
 #if GLES
     import OpenGLES
     #else
-    import OpenGL.GL3
+    import Darwin.C
+    import GLKit
 #endif
 #endif
 
@@ -23,6 +24,11 @@ public struct ShaderUniformSettings {
         set(newValue) { uniformValues[index] = newValue }
     }
     
+    public subscript(index:String) -> [Float]? {
+        get { return uniformValues[index] as? [Float]}
+        set(newValue) { uniformValues[index] = newValue }
+    }
+    
     public subscript(index:String) -> Int? {
         get { return uniformValues[index] as? Int }
         set(newValue) { uniformValues[index] = newValue }
@@ -32,9 +38,19 @@ public struct ShaderUniformSettings {
         get { return uniformValues[index] as? Color }
         set(newValue) { uniformValues[index] = newValue }
     }
+    
+    public subscript(index:String) -> [Color]? {
+        get { return uniformValues[index] as? [Color] }
+        set(newValue) { uniformValues[index] = newValue }
+    }
 
     public subscript(index:String) -> Position? {
         get { return uniformValues[index] as? Position }
+        set(newValue) { uniformValues[index] = newValue }
+    }
+    
+    public subscript(index:String) -> [Position]? {
+        get { return uniformValues[index] as? [Position] }
         set(newValue) { uniformValues[index] = newValue }
     }
 
@@ -57,6 +73,9 @@ public struct ShaderUniformSettings {
         for (uniform, value) in uniformValues {
             switch value {
                 case let value as Float: shader.setValue(GLfloat(value), forUniform:uniform)
+                case let value as [Position]: shader.setArrayOfVectors(value.toGLArray(), forUniform: uniform, dimensions: 2, capacity: value.count)
+                case let value as [Color]: shader.setValue(value, forUniform: uniform)
+                case let value as [Float]: shader.setArrayOfVectors(value, forUniform: uniform, dimensions: 1, capacity: value.count)
                 case let value as Int: shader.setValue(GLint(value), forUniform:uniform)
                 case let value as Color: shader.setValue(value, forUniform:uniform)
                 case let value as Position: shader.setValue(value.toGLArray(), forUniform:uniform)
@@ -66,6 +85,12 @@ public struct ShaderUniformSettings {
                 default: fatalError("Somehow tried to restore a shader uniform value of an unsupported type: \(value)")
             }
         }
+    }
+}
+
+extension Array where Element == Float {
+    func toGLArray() -> [GLfloat] {
+        return map({ GLfloat($0) })
     }
 }
 
@@ -86,6 +111,12 @@ extension Position {
         } else {
             return [GLfloat(x), GLfloat(y)]
         }
+    }
+}
+
+extension Array where Element == Position {
+    func toGLArray() -> [GLfloat] {
+        return map({ $0.toGLArray() }).flatMap({ $0})
     }
 }
 

@@ -58,7 +58,7 @@ public class OpenGLContext: SerialDispatch {
         self.context.makeCurrentContext()
     }
     
-    func presentBufferForDisplay() {
+    public func presentBufferForDisplay() {
         self.context.flushBuffer()
     }
     

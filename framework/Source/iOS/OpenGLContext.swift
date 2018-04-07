@@ -12,9 +12,9 @@ public class OpenGLContext: SerialDispatch {
     public let standardImageVBO:GLuint
     var textureVBOs:[Rotation:GLuint] = [:]
 
-    let context:EAGLContext
+    public let context:EAGLContext
     
-    lazy var passthroughShader:ShaderProgram = {
+    public lazy var passthroughShader:ShaderProgram = {
         return crashOnShaderCompileFailure("OpenGLContext"){return try self.programForVertexShader(OneInputVertexShader, fragmentShader:PassthroughFragmentShader)}
     }()
 
@@ -36,9 +36,9 @@ public class OpenGLContext: SerialDispatch {
         
         let generatedContext:EAGLContext?
         if let shareGroup = imageProcessingShareGroup {
-            generatedContext = EAGLContext(api:.openGLES2, sharegroup:shareGroup)
+            generatedContext = EAGLContext(api:.openGLES3, sharegroup:shareGroup)
         } else {
-            generatedContext = EAGLContext(api:.openGLES2)
+            generatedContext = EAGLContext(api:.openGLES3)
         }
         
         guard let concreteGeneratedContext = generatedContext else {
@@ -65,7 +65,7 @@ public class OpenGLContext: SerialDispatch {
         }
     }
     
-    func presentBufferForDisplay() {
+    public func presentBufferForDisplay() {
         self.context.presentRenderbuffer(Int(GL_RENDERBUFFER))
     }
     
@@ -74,7 +74,7 @@ public class OpenGLContext: SerialDispatch {
     // MARK: Device capabilities
     
     func supportsTextureCaches() -> Bool {
-#if (arch(i386) || arch(x86_64)) && os(iOS)
+        #if targetEnvironment(simulator)
         return false // Simulator glitches out on use of texture caches
 #else
         return true // Every iOS version and device that can run Swift can handle texture caches

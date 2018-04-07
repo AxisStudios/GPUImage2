@@ -10,14 +10,15 @@ import Glibc
 #if GLES
     import OpenGLES
     #else
-    import OpenGL.GL3
+    import Darwin.C
+    import GLKit
 #endif
 #endif
 
 import Foundation
 
 // TODO: Add a good lookup table to this to allow for detailed error messages
-struct FramebufferCreationError:Error {
+public struct FramebufferCreationError:Error {
     let errorCode:GLenum
 }
 
@@ -47,7 +48,7 @@ public class Framebuffer {
     public var orientation:ImageOrientation
 
     public let texture:GLuint
-    let framebuffer:GLuint?
+    public let framebuffer:GLuint?
     let stencilBuffer:GLuint?
     public let size:GLSize
     let internalFormat:Int32
@@ -97,7 +98,7 @@ public class Framebuffer {
         if (!textureOverride) {
             var mutableTexture = texture
             glDeleteTextures(1, &mutableTexture)
-            debugPrint("Delete texture at size: \(size)")
+            //log.debugLog("Delete texture at size: \(size)")
         }
         
         if let framebuffer = framebuffer {
@@ -111,7 +112,7 @@ public class Framebuffer {
         }
     }
     
-    func sizeForTargetOrientation(_ targetOrientation:ImageOrientation) -> GLSize {
+    public func sizeForTargetOrientation(_ targetOrientation:ImageOrientation) -> GLSize {
         if self.orientation.rotationNeededForOrientation(targetOrientation).flipsDimensions() {
             return GLSize(width:size.height, height:size.width)
         } else {
@@ -119,7 +120,7 @@ public class Framebuffer {
         }
     }
     
-    func aspectRatioForRotation(_ rotation:Rotation) -> Float {
+    public func aspectRatioForRotation(_ rotation:Rotation) -> Float {
         if rotation.flipsDimensions() {
             return Float(size.width) / Float(size.height)
         } else {
@@ -162,7 +163,7 @@ public class Framebuffer {
 
     weak var cache:FramebufferCache?
     var framebufferRetainCount = 0
-    func lock() {
+    public func lock() {
         framebufferRetainCount += 1
     }
 

@@ -2,17 +2,28 @@ import UIKit
 
 // TODO: Add support for transparency
 // TODO: Deal with view resizing
-public class RenderView:UIView, ImageConsumer {
+public class RenderView: UIView, ImageConsumer {
     public var backgroundRenderColor = Color.black
-    public var fillMode = FillMode.preserveAspectRatio
-    public var orientation:ImageOrientation = .portrait
-    public var sizeInPixels:Size { get { return Size(width:Float(frame.size.width * contentScaleFactor), height:Float(frame.size.height * contentScaleFactor))}}
+    public var fillMode = FillMode.preserveAspectRatioAndFill // default is .preserveAspectRatio
+    public var orientation: ImageOrientation = .portrait
+    public var sizeInPixels: Size { get { return Size(width: Float(frame.size.width * contentScaleFactor), height: Float(frame.size.height * contentScaleFactor))}}
     
     public let sources = SourceContainer()
-    public let maximumInputs:UInt = 1
-    var displayFramebuffer:GLuint?
-    var displayRenderbuffer:GLuint?
-    var backingSize = GLSize(width:0, height:0)
+    public let maximumInputs: UInt = 1
+    var displayFramebuffer: GLuint?
+    var displayRenderbuffer: GLuint?
+    var backingSize = GLSize(width: 0, height: 0)
+
+    public var isTransparent = false {
+        didSet {
+            layer.isOpaque = !isTransparent
+            isOpaque = !isTransparent
+
+            if isTransparent {
+                backgroundColor = .clear
+            }
+        }
+    }
     
     private lazy var displayShader:ShaderProgram = {
         return sharedImageProcessingContext.passthroughShader
@@ -20,17 +31,19 @@ public class RenderView:UIView, ImageConsumer {
 
     // TODO: Need to set viewport to appropriate size, resize viewport on view reshape
     
-    required public init?(coder:NSCoder) {
-        super.init(coder:coder)
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
+
         self.commonInit()
     }
 
-    public override init(frame:CGRect) {
-        super.init(frame:frame)
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+
         self.commonInit()
     }
 
-    override public class var layerClass:Swift.AnyClass {
+    override public class var layerClass: Swift.AnyClass {
         get {
             return CAEAGLLayer.self
         }
@@ -39,9 +52,10 @@ public class RenderView:UIView, ImageConsumer {
     func commonInit() {
         self.contentScaleFactor = UIScreen.main.scale
         
-        let eaglLayer = self.layer as! CAEAGLLayer
-        eaglLayer.isOpaque = true
-        eaglLayer.drawableProperties = [NSNumber(value:false): kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8: kEAGLDrawablePropertyColorFormat]
+        let eaglLayer = self.layer as? CAEAGLLayer
+        eaglLayer?.isOpaque = true
+        
+        eaglLayer?.drawableProperties = [kEAGLDrawablePropertyRetainedBacking: false, kEAGLDrawablePropertyColorFormat: kEAGLColorFormatRGBA8]
     }
     
     deinit {
@@ -49,23 +63,25 @@ public class RenderView:UIView, ImageConsumer {
     }
     
     func createDisplayFramebuffer() {
-        var newDisplayFramebuffer:GLuint = 0
+        var newDisplayFramebuffer: GLuint = 0
         glGenFramebuffers(1, &newDisplayFramebuffer)
         displayFramebuffer = newDisplayFramebuffer
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), displayFramebuffer!)
 
-        var newDisplayRenderbuffer:GLuint = 0
+        var newDisplayRenderbuffer: GLuint = 0
         glGenRenderbuffers(1, &newDisplayRenderbuffer)
         displayRenderbuffer = newDisplayRenderbuffer
         glBindRenderbuffer(GLenum(GL_RENDERBUFFER), displayRenderbuffer!)
 
-        sharedImageProcessingContext.context.renderbufferStorage(Int(GL_RENDERBUFFER), from:self.layer as! CAEAGLLayer)
+        _ = DispatchQueue.main.sync {
+            sharedImageProcessingContext.context.renderbufferStorage(Int(GL_RENDERBUFFER), from:self.layer as! CAEAGLLayer)
+        }
 
-        var backingWidth:GLint = 0
-        var backingHeight:GLint = 0
+        var backingWidth: GLint = 0
+        var backingHeight: GLint = 0
         glGetRenderbufferParameteriv(GLenum(GL_RENDERBUFFER), GLenum(GL_RENDERBUFFER_WIDTH), &backingWidth)
         glGetRenderbufferParameteriv(GLenum(GL_RENDERBUFFER), GLenum(GL_RENDERBUFFER_HEIGHT), &backingHeight)
-        backingSize = GLSize(width:backingWidth, height:backingHeight)
+        backingSize = GLSize(width: backingWidth, height: backingHeight)
         
         guard ((backingWidth > 0) && (backingHeight > 0)) else {
             fatalError("View had a zero size")
@@ -100,19 +116,29 @@ public class RenderView:UIView, ImageConsumer {
         glViewport(0, 0, backingSize.width, backingSize.height)
     }
     
-    public func newFramebufferAvailable(_ framebuffer:Framebuffer, fromSourceIndex:UInt) {
+    public func newFramebufferAvailable(_ framebuffer: Framebuffer, fromSourceIndex: UInt) {
         if (displayFramebuffer == nil) {
             self.createDisplayFramebuffer()
         }
+        
+        if isTransparent {
+            glEnable(GLenum(GL_BLEND))
+            glBlendFunc(GLenum(GL_SRC_ALPHA), GLenum(GL_ONE_MINUS_DST_ALPHA))
+        }
+
         self.activateDisplayFramebuffer()
         
         clearFramebufferWithColor(backgroundRenderColor)
 
-        let scaledVertices = fillMode.transformVertices(verticallyInvertedImageVertices, fromInputSize:framebuffer.sizeForTargetOrientation(self.orientation), toFitSize:backingSize)
-        renderQuadWithShader(self.displayShader, vertices:scaledVertices, inputTextures:[framebuffer.texturePropertiesForTargetOrientation(self.orientation)])
+        let scaledVertices = fillMode.transformVertices(verticallyInvertedImageVertices, fromInputSize: framebuffer.sizeForTargetOrientation(self.orientation), toFitSize: backingSize)
+        renderQuadWithShader(self.displayShader, vertices: scaledVertices, inputTextures: [framebuffer.texturePropertiesForTargetOrientation(self.orientation)])
         framebuffer.unlock()
         
         glBindRenderbuffer(GLenum(GL_RENDERBUFFER), displayRenderbuffer!)
         sharedImageProcessingContext.presentBufferForDisplay()
+
+        if isTransparent {
+            glDisable(GLenum(GL_BLEND))
+        }
     }
 }

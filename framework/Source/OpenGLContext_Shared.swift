@@ -9,7 +9,8 @@
 #if GLES
     import OpenGLES
     #else
-    import OpenGL.GL3
+    import Darwin.C
+    import GLKit
 #endif
 #endif
 

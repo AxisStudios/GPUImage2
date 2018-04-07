@@ -8,7 +8,8 @@
 #if GLES
     import OpenGLES
 #else
-    import OpenGL.GL3
+    import Darwin.C
+    import GLKit
 #endif
 #endif
     
@@ -143,6 +144,22 @@ public class ShaderProgram {
         }
     }
     
+    public func setValue(_ value: [Color], forUniform:String) {
+        if colorUniformsUseFourComponents {
+            let colors = value.map({ $0.toGLArrayWithAlpha() }).reduce([], { (result, newVal) in
+                return result + newVal
+            })
+            
+            self.setArrayOfVectors(colors, forUniform: forUniform, dimensions: 4, capacity: value.count)
+        } else {
+            let colors = value.map({ $0.toGLArray() }).reduce([], { (result, newVal) in
+                return result + newVal
+            })
+            
+            self.setArrayOfVectors(colors, forUniform: forUniform, dimensions: 3, capacity: value.count)
+        }
+    }
+    
     public func setValue(_ value:[GLfloat], forUniform:String) {
         guard let uniformAddress = uniformIndex(forUniform) else {
             debugPrint("Warning: Tried to set a uniform (\(forUniform)) that was missing or optimized out by the compiler")
@@ -159,6 +176,27 @@ public class ShaderProgram {
             } else {
                 fatalError("Tried to set a float array uniform outside of the range of values")
             }
+            currentUniformFloatArrayValues[forUniform] = value
+        }
+    }
+    
+    public func setArrayOfVectors(_ value: [GLfloat], forUniform: String, dimensions: Int, capacity: Int) {
+        guard let uniformAddress = uniformIndex(forUniform) else {
+            debugPrint("Warning: Tried to set a uniform (\(forUniform)) that was missing or optimized out by the compiler")
+            return
+        }
+        if let previousValue = currentUniformFloatArrayValues[forUniform], previousValue == value{
+        } else {
+            if dimensions == 1 {
+                glUniform1fv(uniformAddress, GLsizei(capacity), value)
+            } else if dimensions == 2 {
+                glUniform2fv(uniformAddress, GLsizei(capacity), value)
+            } else if dimensions == 3 {
+                glUniform3fv(uniformAddress, GLsizei(capacity), value)
+            } else {
+                fatalError("Not implemented")
+            }
+            
             currentUniformFloatArrayValues[forUniform] = value
         }
     }

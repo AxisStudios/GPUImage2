@@ -41,7 +41,6 @@ public class MovieInput: ImageSource {
 
     // MARK: -
     // MARK: Playback control
-
     public func start() {
         asset.loadValuesAsynchronously(forKeys: ["tracks"], completionHandler: {
             DispatchQueue.global(priority:standardProcessingQueuePriority).async {

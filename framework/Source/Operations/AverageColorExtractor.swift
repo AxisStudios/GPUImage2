@@ -9,7 +9,8 @@ import Glibc
 #if GLES
     import OpenGLES
     #else
-    import OpenGL.GL3
+    import Darwin.C
+    import GLKit
 #endif
 #endif
 
@@ -22,7 +23,7 @@ public class AverageColorExtractor: BasicOperation {
         super.init(vertexShader:AverageColorVertexShader, fragmentShader:AverageColorFragmentShader)
     }
 
-    override func renderFrame() {
+    override public func renderFrame() {
         averageColorBySequentialReduction(inputFramebuffer:inputFramebuffers[0]!, shader:shader, extractAverageOperation:extractAverageColorFromFramebuffer)
         releaseIncomingFramebuffers()
     }

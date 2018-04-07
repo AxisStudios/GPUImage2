@@ -8,7 +8,8 @@
 #if GLES
     import OpenGLES
     #else
-    import OpenGL.GL3
+    import Darwin.C
+    import GLKit
 #endif
 #endif
 
@@ -29,14 +30,14 @@ public enum PixelFormat {
 }
 
 // TODO: Replace with texture caches where appropriate
-public class RawDataInput: ImageSource {
-    public let targets = TargetContainer()
+open class RawDataInput: ImageSource {
+    open let targets = TargetContainer()
     
     public init() {
         
     }
 
-    public func uploadBytes(_ bytes:[UInt8], size:Size, pixelFormat:PixelFormat, orientation:ImageOrientation = .portrait) {
+    open func uploadBytes(_ bytes:[UInt8], size:Size, pixelFormat:PixelFormat, orientation:ImageOrientation = .portrait) {
         let dataFramebuffer = sharedImageProcessingContext.framebufferCache.requestFramebufferWithProperties(orientation:orientation, size:GLSize(size), textureOnly:true, internalFormat:pixelFormat.toGL(), format:pixelFormat.toGL())
 
         glActiveTexture(GLenum(GL_TEXTURE1))
@@ -46,7 +47,7 @@ public class RawDataInput: ImageSource {
         updateTargetsWithFramebuffer(dataFramebuffer)
     }
     
-    public func transmitPreviousImage(to target:ImageConsumer, atIndex:UInt) {
+    open func transmitPreviousImage(to target:ImageConsumer, atIndex:UInt) {
         // TODO: Determine if this is necessary for the raw data uploads
     }
 }

@@ -1,4 +1,5 @@
-import OpenGL.GL3
+import Darwin.C
+    import GLKit
 import Cocoa
 
 public class PictureInput: ImageSource {

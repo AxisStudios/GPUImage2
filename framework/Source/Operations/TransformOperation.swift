@@ -8,7 +8,8 @@
 #if GLES
     import OpenGLES
     #else
-    import OpenGL.GL3
+    import Darwin.C
+    import GLKit
 #endif
 #endif
 
@@ -27,7 +28,7 @@ public class TransformOperation: BasicOperation {
         releaseIncomingFramebuffers()
     }
 
-    override func configureFramebufferSpecificUniforms(_ inputFramebuffer:Framebuffer) {
+    override open func configureFramebufferSpecificUniforms(_ inputFramebuffer:Framebuffer) {
         let outputRotation = overriddenOutputRotation ?? inputFramebuffer.orientation.rotationNeededForOrientation(.portrait)
         let aspectRatio = inputFramebuffer.aspectRatioForRotation(outputRotation)
         let orthoMatrix = orthographicMatrix(-1.0, right:1.0, bottom:-1.0 * aspectRatio, top:1.0 * aspectRatio, near:-1.0, far:1.0)
