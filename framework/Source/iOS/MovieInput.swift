@@ -1,4 +1,5 @@
 import AVFoundation
+import NSObjectObjCExceptionExtension
 
 public protocol MovieInputDelegate: class {
     func didFinishMovie()
