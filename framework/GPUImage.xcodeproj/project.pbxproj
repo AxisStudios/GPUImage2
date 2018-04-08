@@ -13,11 +13,8 @@
 		1F499A761FDA0F9F0000E37E /* NSObject+Exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F499A721FDA0F9F0000E37E /* NSObject+Exception.h */; };
 		1F6D1CB32048F81D00317B5F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6D1CB22048F81D00317B5F /* AudioToolbox.framework */; };
 		1F6D1CB52048F8DD00317B5F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6D1CB42048F8DD00317B5F /* AVFoundation.framework */; };
-		1F6D1CB82048FB0300317B5F /* TPCircularBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F6D1CB62048FB0300317B5F /* TPCircularBuffer.h */; };
-		1F6D1CB92048FB0300317B5F /* TPCircularBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F6D1CB62048FB0300317B5F /* TPCircularBuffer.h */; };
-		1F6D1CBA2048FB0300317B5F /* TPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6D1CB72048FB0300317B5F /* TPCircularBuffer.m */; };
-		1F6D1CBB2048FB0300317B5F /* TPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6D1CB72048FB0300317B5F /* TPCircularBuffer.m */; };
 		1F6D1CC02048FFD900317B5F /* SpeakerOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6D1CBF2048FFD900317B5F /* SpeakerOutput.swift */; };
+		1F884BBDB8EE39982C3911A7 /* Pods_GPUImage_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EF5CC37BCD96E4882F23CA7 /* Pods_GPUImage_iOS.framework */; };
 		BC09239E1C92658200A2ADFA /* ShaderProgram_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09239D1C92658200A2ADFA /* ShaderProgram_Tests.swift */; };
 		BC0923A11C92661D00A2ADFA /* Pipeline_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09239F1C9265A600A2ADFA /* Pipeline_Tests.swift */; };
 		BC0923A21C92664900A2ADFA /* Framebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB279EB1C8D11630013E213 /* Framebuffer.swift */; };
@@ -361,6 +358,7 @@
 		BCFF46FC1CBAF85000A0C521 /* TransformOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFF46FB1CBAF85000A0C521 /* TransformOperation.swift */; };
 		BCFF46FE1CBB0C1F00A0C521 /* AverageColorExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFF46FD1CBB0C1F00A0C521 /* AverageColorExtractor.swift */; };
 		BCFF47081CBB443B00A0C521 /* CameraConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFF47071CBB443B00A0C521 /* CameraConversion.swift */; };
+		E66284F72E4F1ACF04B8CA39 /* Pods_GPUImage_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36FC7039E22A1B96639FC94C /* Pods_GPUImage_macOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -386,9 +384,12 @@
 		1F499A771FDA0FE20000E37E /* GPUImage-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "GPUImage-Bridging-Header.h"; path = "Source/GPUImage-Bridging-Header.h"; sourceTree = "<group>"; };
 		1F6D1CB22048F81D00317B5F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		1F6D1CB42048F8DD00317B5F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		1F6D1CB62048FB0300317B5F /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCircularBuffer.h; path = Source/TPCircularBuffer.h; sourceTree = "<group>"; };
-		1F6D1CB72048FB0300317B5F /* TPCircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCircularBuffer.m; path = Source/TPCircularBuffer.m; sourceTree = "<group>"; };
 		1F6D1CBF2048FFD900317B5F /* SpeakerOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeakerOutput.swift; path = Source/iOS/SpeakerOutput.swift; sourceTree = "<group>"; };
+		36FC7039E22A1B96639FC94C /* Pods_GPUImage_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPUImage_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		47D0462204D388A68A576A64 /* Pods-GPUImage_iOS.testing.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImage_iOS.testing.xcconfig"; path = "Pods/Target Support Files/Pods-GPUImage_iOS/Pods-GPUImage_iOS.testing.xcconfig"; sourceTree = "<group>"; };
+		5EF5CC37BCD96E4882F23CA7 /* Pods_GPUImage_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPUImage_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DE6A8B5051F944EB1205A70 /* Pods-GPUImage_macOS.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImage_macOS.production.xcconfig"; path = "Pods/Target Support Files/Pods-GPUImage_macOS/Pods-GPUImage_macOS.production.xcconfig"; sourceTree = "<group>"; };
+		B184917C80A178BA79B7102D /* Pods-GPUImage_iOS.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImage_iOS.production.xcconfig"; path = "Pods/Target Support Files/Pods-GPUImage_iOS/Pods-GPUImage_iOS.production.xcconfig"; sourceTree = "<group>"; };
 		BC09239D1C92658200A2ADFA /* ShaderProgram_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShaderProgram_Tests.swift; path = Tests/ShaderProgram_Tests.swift; sourceTree = SOURCE_ROOT; };
 		BC09239F1C9265A600A2ADFA /* Pipeline_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pipeline_Tests.swift; path = Tests/Pipeline_Tests.swift; sourceTree = SOURCE_ROOT; };
 		BC1E12F41C9F2FD7008F844F /* ThreeInput.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = ThreeInput.vsh; path = Source/Operations/Shaders/ThreeInput.vsh; sourceTree = "<group>"; };
@@ -705,6 +706,9 @@
 		BCFF46FF1CBB0D8900A0C521 /* AverageColor_GL.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = AverageColor_GL.fsh; path = Source/Operations/Shaders/AverageColor_GL.fsh; sourceTree = "<group>"; };
 		BCFF47001CBB0D8900A0C521 /* AverageColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = AverageColor.vsh; path = Source/Operations/Shaders/AverageColor.vsh; sourceTree = "<group>"; };
 		BCFF47071CBB443B00A0C521 /* CameraConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraConversion.swift; path = Source/CameraConversion.swift; sourceTree = "<group>"; };
+		C2E7B5878EB5D18542FBB7A0 /* Pods-GPUImage_macOS.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImage_macOS.development.xcconfig"; path = "Pods/Target Support Files/Pods-GPUImage_macOS/Pods-GPUImage_macOS.development.xcconfig"; sourceTree = "<group>"; };
+		C790B045321136D5B1020F21 /* Pods-GPUImage_macOS.testing.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImage_macOS.testing.xcconfig"; path = "Pods/Target Support Files/Pods-GPUImage_macOS/Pods-GPUImage_macOS.testing.xcconfig"; sourceTree = "<group>"; };
+		E7FB9362263FCD4B1A346060 /* Pods-GPUImage_iOS.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImage_iOS.development.xcconfig"; path = "Pods/Target Support Files/Pods-GPUImage_iOS/Pods-GPUImage_iOS.development.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -713,6 +717,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC6E7CCA1C39ADCC006DF678 /* OpenGL.framework in Frameworks */,
+				E66284F72E4F1ACF04B8CA39 /* Pods_GPUImage_macOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,6 +737,7 @@
 				1F6D1CB52048F8DD00317B5F /* AVFoundation.framework in Frameworks */,
 				1F6D1CB32048F81D00317B5F /* AudioToolbox.framework in Frameworks */,
 				BC9E35021E524BE200B8604F /* OpenGLES.framework in Frameworks */,
+				1F884BBDB8EE39982C3911A7 /* Pods_GPUImage_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,6 +752,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C0A502CFE00F4CBC3A473B6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E7FB9362263FCD4B1A346060 /* Pods-GPUImage_iOS.development.xcconfig */,
+				47D0462204D388A68A576A64 /* Pods-GPUImage_iOS.testing.xcconfig */,
+				B184917C80A178BA79B7102D /* Pods-GPUImage_iOS.production.xcconfig */,
+				C2E7B5878EB5D18542FBB7A0 /* Pods-GPUImage_macOS.development.xcconfig */,
+				C790B045321136D5B1020F21 /* Pods-GPUImage_macOS.testing.xcconfig */,
+				6DE6A8B5051F944EB1205A70 /* Pods-GPUImage_macOS.production.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BC1E12F81C9F4C69008F844F /* Blends */ = {
 			isa = PBXGroup;
 			children = (
@@ -965,6 +984,7 @@
 				BC6E7CAD1C39A9D8006DF678 /* Other */,
 				BC6E7CCB1C39ADDD006DF678 /* Frameworks */,
 				BC6E7CAC1C39A9D8006DF678 /* Products */,
+				5C0A502CFE00F4CBC3A473B6 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -982,8 +1002,6 @@
 		BC6E7CAD1C39A9D8006DF678 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				1F6D1CB62048FB0300317B5F /* TPCircularBuffer.h */,
-				1F6D1CB72048FB0300317B5F /* TPCircularBuffer.m */,
 				1F499A721FDA0F9F0000E37E /* NSObject+Exception.h */,
 				1F499A711FDA0F9E0000E37E /* NSObject+Exception.m */,
 				BC4C85ED1C9F042900FD95D8 /* ConvertedShaders_GL.swift */,
@@ -1032,6 +1050,8 @@
 				1F6D1CB22048F81D00317B5F /* AudioToolbox.framework */,
 				BC9E35011E524BE200B8604F /* OpenGLES.framework */,
 				BC6E7CC91C39ADCC006DF678 /* OpenGL.framework */,
+				5EF5CC37BCD96E4882F23CA7 /* Pods_GPUImage_iOS.framework */,
+				36FC7039E22A1B96639FC94C /* Pods_GPUImage_macOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1228,7 +1248,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F499A751FDA0F9F0000E37E /* NSObject+Exception.h in Headers */,
-				1F6D1CB82048FB0300317B5F /* TPCircularBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1237,7 +1256,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F499A761FDA0F9F0000E37E /* NSObject+Exception.h in Headers */,
-				1F6D1CB92048FB0300317B5F /* TPCircularBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1248,10 +1266,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC6E7CBF1C39A9D8006DF678 /* Build configuration list for PBXNativeTarget "GPUImage_macOS" */;
 			buildPhases = (
+				156A6072A307998AFE879693 /* [CP] Check Pods Manifest.lock */,
 				BC6E7CA61C39A9D8006DF678 /* Sources */,
 				BC6E7CA71C39A9D8006DF678 /* Frameworks */,
 				BC6E7CA81C39A9D8006DF678 /* Headers */,
 				BC6E7CA91C39A9D8006DF678 /* Resources */,
+				5CCEB5D3A6370E65B5ECFE81 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1284,10 +1304,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC9E34FA1E524A2300B8604F /* Build configuration list for PBXNativeTarget "GPUImage_iOS" */;
 			buildPhases = (
+				542D17322B559092983D526E /* [CP] Check Pods Manifest.lock */,
 				BC9E34E41E524A2200B8604F /* Sources */,
 				BC9E34E51E524A2200B8604F /* Frameworks */,
 				BC9E34E61E524A2200B8604F /* Headers */,
 				BC9E34E71E524A2200B8604F /* Resources */,
+				AA9FCC5945DD39F7AC493A47 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1396,6 +1418,75 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		156A6072A307998AFE879693 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GPUImage_macOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		542D17322B559092983D526E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GPUImage_iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5CCEB5D3A6370E65B5ECFE81 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GPUImage_macOS/Pods-GPUImage_macOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AA9FCC5945DD39F7AC493A47 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GPUImage_iOS/Pods-GPUImage_iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BC6E7CA61C39A9D8006DF678 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1481,7 +1572,6 @@
 				BCFF46C01CB9556B00A0C521 /* WhiteBalance.swift in Sources */,
 				BC7FD14E1CB0BD3900037949 /* ZoomBlur.swift in Sources */,
 				BCFB07921CBF37A1009B2333 /* TextureInput.swift in Sources */,
-				1F6D1CBA2048FB0300317B5F /* TPCircularBuffer.m in Sources */,
 				BC6E7CC71C39AD9E006DF678 /* ShaderProgram.swift in Sources */,
 				BCFF46CA1CB96BD700A0C521 /* HighPassFilter.swift in Sources */,
 				BC7FD1321CB0A57F00037949 /* HighlightsAndShadows.swift in Sources */,
@@ -1666,7 +1756,6 @@
 				BC9E35511E52518F00B8604F /* Timestamp.swift in Sources */,
 				BC9E35781E5256EB00B8604F /* ColorMatrixFilter.swift in Sources */,
 				BC9E35D11E52580400B8604F /* ScreenBlend.swift in Sources */,
-				1F6D1CBB2048FB0300317B5F /* TPCircularBuffer.m in Sources */,
 				BC9E356A1E5256C200B8604F /* Haze.swift in Sources */,
 				BC9E35D31E52580A00B8604F /* SourceOverBlend.swift in Sources */,
 				BC9E357E1E5256FE00B8604F /* Vibrance.swift in Sources */,
@@ -1817,6 +1906,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1834,7 +1924,7 @@
 				INSTALL_PATH = /Library/Frameworks;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/GPUImage-Bridging-Header.h";
@@ -1847,6 +1937,7 @@
 		};
 		AACAA49A1FBF9D6B00A4B125 /* Development */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C2E7B5878EB5D18542FBB7A0 /* Pods-GPUImage_macOS.development.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1881,6 +1972,7 @@
 		};
 		AACAA49C1FBF9D6B00A4B125 /* Development */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7FB9362263FCD4B1A346060 /* Pods-GPUImage_iOS.development.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1964,6 +2056,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1981,7 +2074,7 @@
 				INSTALL_PATH = /Library/Frameworks;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/GPUImage-Bridging-Header.h";
@@ -1994,6 +2087,7 @@
 		};
 		AACAA49F1FBF9E5900A4B125 /* Testing */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C790B045321136D5B1020F21 /* Pods-GPUImage_macOS.testing.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2028,6 +2122,7 @@
 		};
 		AACAA4A11FBF9E5900A4B125 /* Testing */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47D0462204D388A68A576A64 /* Pods-GPUImage_iOS.testing.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2111,6 +2206,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2122,6 +2218,7 @@
 				INSTALL_PATH = /Library/Frameworks;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/GPUImage-Bridging-Header.h";
@@ -2133,6 +2230,7 @@
 		};
 		BC6E7CC11C39A9D8006DF678 /* Production */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6DE6A8B5051F944EB1205A70 /* Pods-GPUImage_macOS.production.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2168,6 +2266,7 @@
 		};
 		BC9E34FC1E524A2300B8604F /* Production */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B184917C80A178BA79B7102D /* Pods-GPUImage_iOS.production.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
