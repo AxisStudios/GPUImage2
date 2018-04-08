@@ -1,12 +1,15 @@
 PODS:
+  - NSObjectObjCExceptionExtension (1.0.0)
   - TPCircularBuffer (1.6)
 
 DEPENDENCIES:
+  - NSObjectObjCExceptionExtension
   - TPCircularBuffer
 
 SPEC CHECKSUMS:
+  NSObjectObjCExceptionExtension: 9406568f4a0f2baccd916dbf7a48ee03644b9873
   TPCircularBuffer: c7c37ec4494af194560600f9ab22ce20a781a0d1
 
-PODFILE CHECKSUM: 4ee1824db4065bd7541da2b30e3374ebdd382aa6
+PODFILE CHECKSUM: 4db92500069e3b1d824056bce02d6d4c8a8205fa
 
 COCOAPODS: 1.4.0

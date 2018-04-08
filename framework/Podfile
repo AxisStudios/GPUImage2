@@ -9,8 +9,7 @@ target 'GPUImage_iOS' do
     # Pods for GPUImage_iOS
 inherit! :search_paths
     pod 'TPCircularBuffer'
-
-
+    pod 'NSObjectObjCExceptionExtension'
 
 end
 
