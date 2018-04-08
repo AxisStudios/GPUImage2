@@ -18,6 +18,6 @@ s.ios.exclude_files = 'framework/Source/Mac', 'framework/Source/Linux', 'framewo
 s.frameworks   = ['OpenGLES', 'CoreMedia', 'QuartzCore', 'AVFoundation']
 
 s.dependency 'TPCircularBuffer'
-s.dependency 'NSObjectObjCExceptionExtension', :git => 'https://github.com/premyslvlcek/GPUImage2'
+s.dependency 'NSObjectObjCExceptionExtension', :git => 'https://github.com/premyslvlcek/NSObjectObjCExceptionExtension'
 
 end
