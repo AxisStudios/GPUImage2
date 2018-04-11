@@ -36,7 +36,7 @@ open class TransformOperation: BasicOperation {
         if(ignoreAspectRatio) {
             aspectRatio = 1
         }
-        let orthoMatrix = orthographicMatrix(-1.0, right:1.0, bottom:-1.0 * aspectRatio, top:1.0 * aspectRatio, near:-1.0, far:1.0, anchorTopLeft:anchorTopLeft)
+        let orthoMatrix = Matrix4x4(orthographicMatrixLeft: -1.0, right:1.0, bottom:-1.0 * aspectRatio, top:1.0 * aspectRatio, near:-1.0, far:1.0, anchorTopLeft:anchorTopLeft)
         normalizedImageVertices = normalizedImageVerticesForAspectRatio(aspectRatio)
         
         uniformSettings["orthographicMatrix"] = orthoMatrix

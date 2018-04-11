@@ -2,15 +2,76 @@
 import QuartzCore
 #endif
 
+public protocol Number: Multipliable, Addable {
+    static var zero: Self { get }
+}
+
+public protocol Addable {
+    static func + (lhs: Self, rhs: Self) -> Self
+    static func - (lhs: Self, rhs: Self) -> Self
+}
+
+public protocol Multipliable {
+    static func * (lhs: Self, rhs: Self) -> Self
+}
+
+extension Int: Number {
+    public static var zero: Int { return 0 }
+}
+
+extension Double: Number {
+    public static var zero: Double { return 0.0 }
+}
+
+extension Float: Number {
+    public static var zero: Float { return 0.0 }
+}
+
+extension Array where Element: Number {
+    public func dot(_ b: Array<Element>) -> Element {
+        let a = self
+        assert(a.count == b.count, "Can only take the dot product of arrays of the same length!")
+        let c = a.indices.map { a[$0] * b[$0] }
+        return c.reduce(Element.zero, { $0 + $1 })
+    }
+}
+
+
+
 public struct Matrix4x4 {
-    public let m11:Float, m12:Float, m13:Float, m14:Float
-    public let m21:Float, m22:Float, m23:Float, m24:Float
-    public let m31:Float, m32:Float, m33:Float, m34:Float
-    public let m41:Float, m42:Float, m43:Float, m44:Float
+    public enum Index {
+        case row, column
+    }
+
+    public var m11:Float = 0, m12:Float = 0, m13:Float = 0, m14:Float = 0
+    public var m21:Float = 0, m22:Float = 0, m23:Float = 0, m24:Float = 0
+    public var m31:Float = 0, m32:Float = 0, m33:Float = 0, m34:Float = 0
+    public var m41:Float = 0, m42:Float = 0, m43:Float = 0, m44:Float = 0
+
+    public var rowMajorValues: [Float] {
+        get {
+            return [
+                m11, m12, m13, m14,
+                m21, m22, m23, m24,
+                m31, m32, m33, m34,
+                m41, m42, m43, m44
+            ]
+        } set {
+            loadVariablesFromRowMajorValeues(rowMajorValues: newValue)
+        }
+    }
+
+    public init() {
+
+    }
     
     public init(rowMajorValues:[Float]) {
+        loadVariablesFromRowMajorValeues(rowMajorValues: rowMajorValues)
+    }
+
+    private mutating func loadVariablesFromRowMajorValeues(rowMajorValues: [Float]) {
         guard rowMajorValues.count > 15 else { fatalError("Tried to initialize a 4x4 matrix with fewer than 16 values") }
-        
+
         self.m11 = rowMajorValues[0]
         self.m12 = rowMajorValues[1]
         self.m13 = rowMajorValues[2]
@@ -36,12 +97,54 @@ public struct Matrix4x4 {
                                                            0.0, 1.0, 0.0, 0.0,
                                                            0.0, 0.0, 1.0, 0.0,
                                                            0.0, 0.0, 0.0, 1.0])
+
+    private func indexIsValid(row: Int, column: Int) -> Bool {
+        return row >= 0 && row < 4 && column >= 0 && column < 4
+    }
+
+    public subscript(row: Int, column: Int) -> Float {
+        get {
+            assert(indexIsValid(row: row, column: column), "Index out of range")
+            return rowMajorValues[(row * 4) + column]
+        } set {
+            assert(indexIsValid(row: row, column: column), "Index out of range")
+            rowMajorValues[(row * 4) + column] = newValue
+        }
+    }
+
+    public subscript(type: Matrix4x4.Index, value: Int) -> [Float] {
+        get {
+            switch type {
+            case .row:
+                assert(indexIsValid(row: value, column: 0), "Index out of range")
+                return Array(rowMajorValues[(value * 4)..<(value * 4) + 4])
+            case .column:
+                assert(indexIsValid(row: 0, column: value), "Index out of range")
+                let column = (0..<4).map { (currentRow) -> Float in
+                    let currentColumnIndex = currentRow * 4 + value
+                    return rowMajorValues[currentColumnIndex]
+                }
+                return column
+            }
+        } set {
+            switch type {
+            case .row:
+                for (column, element) in newValue.enumerated() {
+                    rowMajorValues[(value * 4) + column] = element
+                }
+            case .column:
+                for (row, element) in newValue.enumerated() {
+                    rowMajorValues[(row * 4) + value] = element
+                }
+            }
+        }
+    }
 }
 
 public struct Matrix3x3 {
-    public let m11:Float, m12:Float, m13:Float
-    public let m21:Float, m22:Float, m23:Float
-    public let m31:Float, m32:Float, m33:Float
+    public var m11:Float, m12:Float, m13:Float
+    public var m21:Float, m22:Float, m23:Float
+    public var m31:Float, m32:Float, m33:Float
     
     public init(rowMajorValues:[Float]) {
         guard rowMajorValues.count > 8 else { fatalError("Tried to initialize a 3x3 matrix with fewer than 9 values") }
@@ -67,31 +170,6 @@ public struct Matrix3x3 {
                                                              0.0, 1.0, 0.0,
                                                              0.0, 0.0, 0.0])
 }
-
-func orthographicMatrix(_ left:Float, right:Float, bottom:Float, top:Float, near:Float, far:Float, anchorTopLeft:Bool = false) -> Matrix4x4 {
-    let r_l = right - left
-    let t_b = top - bottom
-    let f_n = far - near
-    var tx = -(right + left) / (right - left)
-    var ty = -(top + bottom) / (top - bottom)
-    let tz = -(far + near) / (far - near)
-    
-    let scale:Float
-    if (anchorTopLeft) {
-        scale = 4.0
-        tx = -1.0
-        ty = -1.0
-    } else {
-        scale = 2.0
-    }
-    
-    return Matrix4x4(rowMajorValues:[
-        scale / r_l, 0.0, 0.0, tx,
-        0.0, scale / t_b, 0.0, ty,
-        0.0, 0.0, scale / f_n, tz,
-        0.0, 0.0, 0.0, 1.0])
-}
-
 
 #if !os(Linux)
 public extension Matrix4x4 {
@@ -146,3 +224,15 @@ public extension Matrix4x4 {
     }
 }
 #endif
+
+public func *(left: Matrix4x4, right: Matrix4x4) -> Matrix4x4 {
+    var C = Matrix4x4()
+
+    for i in 0..<4 {
+        for j in 0..<4 {
+            C[i, j] = left[.row, i].dot(right[.column, j])
+        }
+    }
+
+    return C
+}
