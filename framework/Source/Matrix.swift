@@ -120,5 +120,29 @@ public extension Matrix4x4 {
     public init (_ transform:CGAffineTransform) {
         self.init(CATransform3DMakeAffineTransform(transform))
     }
+
+    public init(orthographicMatrixLeft left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float, anchorTopLeft: Bool = false) {
+        let r_l = right - left
+        let t_b = top - bottom
+        let f_n = far - near
+        var tx = -(right + left) / (right - left)
+        var ty = -(top + bottom) / (top - bottom)
+        let tz = -(far + near) / (far - near)
+
+        let scale:Float
+        if (anchorTopLeft) {
+            scale = 4.0
+            tx = -1.0
+            ty = -1.0
+        } else {
+            scale = 2.0
+        }
+
+        self.init(rowMajorValues:[
+        scale / r_l, 0.0, 0.0, tx,
+        0.0, scale / t_b, 0.0, ty,
+        0.0, 0.0, scale / f_n, tz,
+        0.0, 0.0, 0.0, 1.0])
+    }
 }
 #endif
