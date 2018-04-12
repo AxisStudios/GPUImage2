@@ -12,12 +12,12 @@ public func defaultVertexShaderForInputs(_ inputCount:UInt) -> String {
 }
 
 open class BasicOperation: ImageProcessingOperation {
-    public let maximumInputs:UInt
-    public var overriddenOutputSize:Size?
-    public var overriddenOutputRotation:Rotation?
+    public let maximumInputs: UInt
+    public var overriddenOutputSize: Size?
+    public var overriddenOutputRotation: Rotation?
     public var backgroundColor = Color.black
-    public var drawUnmodifiedImageOutsideOfMask:Bool = true
-    public var mask:ImageSource? {
+    public var drawUnmodifiedImageOutsideOfMask: Bool = true
+    public var mask: ImageSource? {
         didSet {
             if let mask = mask {
                 maskImageRelay.newImageCallback = {[weak self] framebuffer in
@@ -33,7 +33,7 @@ open class BasicOperation: ImageProcessingOperation {
             }
         }
     }
-    public var activatePassthroughOnNextFrame:Bool = false
+    public var activatePassthroughOnNextFrame: Bool = false
     public var uniformSettings = ShaderUniformSettings()
     
     // MARK: -
@@ -41,13 +41,17 @@ open class BasicOperation: ImageProcessingOperation {
     
     public let targets = TargetContainer()
     public let sources = SourceContainer()
-    var shader:ShaderProgram
+    var shader: ShaderProgram
     public var inputFramebuffers = [UInt:Framebuffer]()
-    var renderFramebuffer:Framebuffer!
-    var outputFramebuffer:Framebuffer { get { return renderFramebuffer } }
-    let usesAspectRatio:Bool
+
+    public var renderFramebuffer: Framebuffer!
+    var outputFramebuffer: Framebuffer {
+        return renderFramebuffer
+    }
+
+    let usesAspectRatio: Bool
     let maskImageRelay = ImageRelay()
-    var maskFramebuffer:Framebuffer?
+    var maskFramebuffer: Framebuffer?
     
     // MARK: -
     // MARK: Initialization and teardown
