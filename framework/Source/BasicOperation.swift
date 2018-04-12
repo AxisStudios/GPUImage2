@@ -127,7 +127,7 @@ open class BasicOperation: ImageProcessingOperation {
         }
     }
     
-    public func internalRenderFunction(_ inputFramebuffer:Framebuffer, textureProperties:[InputTextureProperties]) {
+    open func internalRenderFunction(_ inputFramebuffer:Framebuffer, textureProperties:[InputTextureProperties]) {
         renderQuadWithShader(shader, uniformSettings:uniformSettings, vertexBufferObject:sharedImageProcessingContext.standardImageVBO, inputTextures:textureProperties)
         releaseIncomingFramebuffers()
     }
