@@ -127,12 +127,12 @@ open class BasicOperation: ImageProcessingOperation {
         }
     }
     
-    func internalRenderFunction(_ inputFramebuffer:Framebuffer, textureProperties:[InputTextureProperties]) {
+    public func internalRenderFunction(_ inputFramebuffer:Framebuffer, textureProperties:[InputTextureProperties]) {
         renderQuadWithShader(shader, uniformSettings:uniformSettings, vertexBufferObject:sharedImageProcessingContext.standardImageVBO, inputTextures:textureProperties)
         releaseIncomingFramebuffers()
     }
     
-    func releaseIncomingFramebuffers() {
+    public func releaseIncomingFramebuffers() {
         var remainingFramebuffers = [UInt:Framebuffer]()
         // If all inputs are still images, have this output behave as one
         renderFramebuffer.timingStyle = .stillImage
@@ -158,7 +158,7 @@ open class BasicOperation: ImageProcessingOperation {
         inputFramebuffers = remainingFramebuffers
     }
     
-    func sizeOfInitialStageBasedOnFramebuffer(_ inputFramebuffer:Framebuffer) -> GLSize {
+    public func sizeOfInitialStageBasedOnFramebuffer(_ inputFramebuffer:Framebuffer) -> GLSize {
         if let outputSize = overriddenOutputSize {
             return GLSize(outputSize)
         } else {
@@ -166,7 +166,7 @@ open class BasicOperation: ImageProcessingOperation {
         }
     }
     
-    func initialTextureProperties() -> [InputTextureProperties] {
+    public func initialTextureProperties() -> [InputTextureProperties] {
         var inputTextureProperties = [InputTextureProperties]()
         
         if let outputRotation = overriddenOutputRotation {
