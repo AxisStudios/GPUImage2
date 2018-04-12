@@ -41,7 +41,7 @@ open class BasicOperation: ImageProcessingOperation {
     
     public let targets = TargetContainer()
     public let sources = SourceContainer()
-    var shader: ShaderProgram
+    public internal(set) var shader: ShaderProgram
     public var inputFramebuffers = [UInt:Framebuffer]()
 
     public var renderFramebuffer: Framebuffer!
