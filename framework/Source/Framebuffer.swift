@@ -211,7 +211,7 @@ func hashForFramebufferWithProperties(orientation:ImageOrientation, size:GLSize,
 // MARK: -
 // MARK: Framebuffer-related extensions
 
-extension Rotation {
+public extension Rotation {
     func textureCoordinates() -> [GLfloat] {
         switch self {
             case .noRotation: return [0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0]
