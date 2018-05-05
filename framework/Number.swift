@@ -33,7 +33,7 @@ extension Float: Number {
     public static var zero: Float { return 0.0 }
 }
 
-extension Array where Element: Number {
+public extension Array where Element: Number {
     public func dot(_ b: Array<Element>) -> Element {
         let a = self
         assert(a.count == b.count, "Can only take the dot product of arrays of the same length!")
