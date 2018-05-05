@@ -11,8 +11,8 @@
 		1F6D1CB52048F8DD00317B5F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6D1CB42048F8DD00317B5F /* AVFoundation.framework */; };
 		1F6D1CC02048FFD900317B5F /* SpeakerOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6D1CBF2048FFD900317B5F /* SpeakerOutput.swift */; };
 		1F884BBDB8EE39982C3911A7 /* Pods_GPUImage_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EF5CC37BCD96E4882F23CA7 /* Pods_GPUImage_iOS.framework */; };
-		AA8FEC44209085F90049B560 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8FEC43209085F90049B560 /* Number.swift */; };
-		AA8FEC452090867E0049B560 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8FEC43209085F90049B560 /* Number.swift */; };
+		AAB6D15C209E4E6C00DBF2C0 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB6D15B209E4E6C00DBF2C0 /* Number.swift */; };
+		AAB6D15D209E4E8800DBF2C0 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB6D15B209E4E6C00DBF2C0 /* Number.swift */; };
 		BC09239E1C92658200A2ADFA /* ShaderProgram_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09239D1C92658200A2ADFA /* ShaderProgram_Tests.swift */; };
 		BC0923A11C92661D00A2ADFA /* Pipeline_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09239F1C9265A600A2ADFA /* Pipeline_Tests.swift */; };
 		BC0923A21C92664900A2ADFA /* Framebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB279EB1C8D11630013E213 /* Framebuffer.swift */; };
@@ -384,7 +384,7 @@
 		47D0462204D388A68A576A64 /* Pods-GPUImage_iOS.testing.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImage_iOS.testing.xcconfig"; path = "Pods/Target Support Files/Pods-GPUImage_iOS/Pods-GPUImage_iOS.testing.xcconfig"; sourceTree = "<group>"; };
 		5EF5CC37BCD96E4882F23CA7 /* Pods_GPUImage_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GPUImage_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DE6A8B5051F944EB1205A70 /* Pods-GPUImage_macOS.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImage_macOS.production.xcconfig"; path = "Pods/Target Support Files/Pods-GPUImage_macOS/Pods-GPUImage_macOS.production.xcconfig"; sourceTree = "<group>"; };
-		AA8FEC43209085F90049B560 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
+		AAB6D15B209E4E6C00DBF2C0 /* Number.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Number.swift; path = Source/Number.swift; sourceTree = "<group>"; };
 		B184917C80A178BA79B7102D /* Pods-GPUImage_iOS.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GPUImage_iOS.production.xcconfig"; path = "Pods/Target Support Files/Pods-GPUImage_iOS/Pods-GPUImage_iOS.production.xcconfig"; sourceTree = "<group>"; };
 		BC09239D1C92658200A2ADFA /* ShaderProgram_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShaderProgram_Tests.swift; path = Tests/ShaderProgram_Tests.swift; sourceTree = SOURCE_ROOT; };
 		BC09239F1C9265A600A2ADFA /* Pipeline_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pipeline_Tests.swift; path = Tests/Pipeline_Tests.swift; sourceTree = SOURCE_ROOT; };
@@ -764,11 +764,11 @@
 		AA8FEC41209085D20049B560 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AAB6D15B209E4E6C00DBF2C0 /* Number.swift */,
 				BC7FD0F81CB063B700037949 /* Color.swift */,
 				BC7FD0FC1CB06E0000037949 /* Position.swift */,
 				BC7FD1921CB1D38500037949 /* Size.swift */,
 				BC7FD1591CB0C77900037949 /* Matrix.swift */,
-				AA8FEC43209085F90049B560 /* Number.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1581,7 +1581,7 @@
 				BC4EE15E1CB3481F00AD8A65 /* ThresholdSobelEdgeDetection.swift in Sources */,
 				BC7FD1911CB1D2A300037949 /* ImageGenerator.swift in Sources */,
 				BC7FD1201CB079B200037949 /* SaturationBlend.swift in Sources */,
-				AA8FEC44209085F90049B560 /* Number.swift in Sources */,
+				AAB6D15C209E4E6C00DBF2C0 /* Number.swift in Sources */,
 				BCA4E2491CC3EF26007B51BA /* ColourFASTFeatureDetection.swift in Sources */,
 				BC7FD0FD1CB06E0000037949 /* Position.swift in Sources */,
 				BCFF46A61CB7428C00A0C521 /* OperationGroup.swift in Sources */,
@@ -1677,7 +1677,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA8FEC452090867E0049B560 /* Number.swift in Sources */,
+				AAB6D15D209E4E8800DBF2C0 /* Number.swift in Sources */,
 				BC9E359D1E52575E00B8604F /* CannyEdgeDetection.swift in Sources */,
 				BC9E35CB1E5257F300B8604F /* LinearBurnBlend.swift in Sources */,
 				BC9E35761E5256E500B8604F /* MissEtikateFilter.swift in Sources */,
