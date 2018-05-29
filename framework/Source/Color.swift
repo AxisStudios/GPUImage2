@@ -1,3 +1,7 @@
+#if os(iOS)
+import UIKit
+#endif
+
 public struct Color {
     public let redComponent: Float
     public let greenComponent: Float
@@ -27,3 +31,17 @@ extension Color: Equatable {
             lhs.alphaComponent == rhs.alphaComponent
     }
 }
+
+#if os(iOS)
+extension Color {
+    init(color: UIColor) {
+        let coreImageColor = CIColor(color: color)
+
+        let red = Float(coreImageColor.red)
+        let green = Float(coreImageColor.green)
+        let blue = Float(coreImageColor.blue)
+        let alpha = Float(coreImageColor.alpha)
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
+}
+#endif
