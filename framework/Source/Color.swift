@@ -34,7 +34,7 @@ extension Color: Equatable {
 
 #if os(iOS)
 extension Color {
-    init(color: UIColor) {
+    public init(color: UIColor) {
         let coreImageColor = CIColor(color: color)
 
         let red = Float(coreImageColor.red)
