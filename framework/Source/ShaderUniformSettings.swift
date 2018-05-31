@@ -77,17 +77,28 @@ public struct ShaderUniformSettings {
     public func restoreShaderSettings(_ shader:ShaderProgram) {
         for (uniform, value) in uniformValues {
             switch value {
-            case let value as Float: shader.setValue(GLfloat(value), forUniform:uniform)
-            case let value as [Position]: shader.setArrayOfVectors(value.toGLArray(), forUniform: uniform, dimensions: 2, capacity: value.count)
-            case let value as [Color]: shader.setValue(value, forUniform: uniform)
-            case let value as [Float]: shader.setArrayOfVectors(value, forUniform: uniform, dimensions: 1, capacity: value.count)
-            case let value as Int: shader.setValue(GLint(value), forUniform:uniform)
-            case let value as Color: shader.setValue(value, forUniform:uniform)
-            case let value as Position: shader.setValue(value.toGLArray(), forUniform:uniform)
-            case let value as Size: shader.setValue(value.toGLArray(), forUniform:uniform)
-            case let value as Matrix4x4: shader.setMatrix(value.toRowMajorGLArray(), forUniform:uniform)
-            case let value as Matrix3x3: shader.setMatrix(value.toRowMajorGLArray(), forUniform:uniform)
-            case let value as Bool: shader.setValue(GLint(value == true ? 1 : 0), forUniform: uniform)
+            case let value as Float:
+                shader.setValue(GLfloat(value), forUniform:uniform)
+            case let value as [Position]:
+                shader.setArrayOfVectors(value.toGLArray(), forUniform: uniform, dimensions: 2, capacity: value.count)
+            case let value as [Color]:
+                shader.setValue(value, forUniform: uniform)
+            case let value as [Float]:
+                shader.setArrayOfVectors(value, forUniform: uniform, dimensions: 1, capacity: value.count)
+            case let value as Int:
+                shader.setValue(GLint(value), forUniform:uniform)
+            case let value as Color:
+                shader.setValue(value, forUniform:uniform)
+            case let value as Position:
+                shader.setValue(value.toGLArray(), forUniform:uniform)
+            case let value as Size:
+                shader.setValue(value.toGLArray(), forUniform:uniform)
+            case let value as Matrix4x4:
+                shader.setMatrix(value.toRowMajorGLArray(), forUniform:uniform)
+            case let value as Matrix3x3:
+                shader.setMatrix(value.toRowMajorGLArray(), forUniform:uniform)
+            case let value as Bool:
+                shader.setValue(GLint(value == true ? 1 : 0), forUniform: uniform)
             default: fatalError("Somehow tried to restore a shader uniform value of an unsupported type: \(value)")
             }
         }
