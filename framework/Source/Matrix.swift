@@ -2,6 +2,10 @@
 import QuartzCore
 #endif
 
+#if os(iOS) || os(tvOS) || os(watchOS)
+import GLKit
+#endif
+
 public struct Matrix4x4 {
     public enum Index {
         case row, column
@@ -21,7 +25,7 @@ public struct Matrix4x4 {
                 m41, m42, m43, m44
             ]
         } set {
-            loadVariablesFromRowMajorValeues(rowMajorValues: newValue)
+            loadVariablesFromRowMajorValues(rowMajorValues: newValue)
         }
     }
 
@@ -30,10 +34,34 @@ public struct Matrix4x4 {
     }
 
     public init(rowMajorValues:[Float]) {
-        loadVariablesFromRowMajorValeues(rowMajorValues: rowMajorValues)
+        loadVariablesFromRowMajorValues(rowMajorValues: rowMajorValues)
     }
 
-    private mutating func loadVariablesFromRowMajorValeues(rowMajorValues: [Float]) {
+    public init(glkMatrix4 matrix: GLKMatrix4) {
+        loadVariablesFromRowMajorValues(rowMajorValues: [
+            matrix.m00,
+            matrix.m01,
+            matrix.m02,
+            matrix.m03,
+
+            matrix.m10,
+            matrix.m11,
+            matrix.m12,
+            matrix.m13,
+
+            matrix.m20,
+            matrix.m21,
+            matrix.m22,
+            matrix.m23,
+
+            matrix.m30,
+            matrix.m31,
+            matrix.m32,
+            matrix.m33
+            ])
+    }
+
+    private mutating func loadVariablesFromRowMajorValues(rowMajorValues: [Float]) {
         guard rowMajorValues.count > 15 else { fatalError("Tried to initialize a 4x4 matrix with fewer than 16 values") }
 
         self.m11 = rowMajorValues[0]
