@@ -31,7 +31,7 @@ public enum PixelFormat {
 
 // TODO: Replace with texture caches where appropriate
 open class RawDataInput: ImageSource {
-    open let targets = TargetContainer()
+    public let targets = TargetContainer()
     
     public init() {
         
